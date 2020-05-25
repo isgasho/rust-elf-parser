@@ -1,4 +1,7 @@
 use std::env;
+use std::fs::File;
+use std::io::prelude::*;
+use std::path::Path;
 
 fn main() {
     std::process::exit(run())
@@ -26,4 +29,10 @@ fn get_target() -> Result<String, String> {
 
     let target = &args[1];
     return Ok(target.to_string());
+}
+
+fn read_elf(path: &str, buf: &mut Vec<u8>) -> Result<(), Box<std::error::Error>> {
+    let mut file = File::open(Path::new(path))?;
+    let _ = file.read_to_end(buf)?;
+    Ok(())
 }
