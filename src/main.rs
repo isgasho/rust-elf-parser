@@ -4,21 +4,16 @@ use std::io::prelude::*;
 use std::path::Path;
 
 fn main() {
-    std::process::exit(run())
+    run();
 }
 
-fn run() -> i32 {
-    let result = get_target();
-    match result {
-        Err(e) => {
-            eprintln!("{}", e);
-            return 1;
-        },
-        Ok(target) => {
-            println!("{}", target);
-            return 0;
-        },
-    }
+fn run() -> Result<(), String> {
+    let target = get_target()?;
+
+    let mut buf = Vec::new();
+    read_elf(&target, &mut buf)?;
+    println!("{:?}", buf.get(0..4));
+    Ok(())
 }
 
 fn get_target() -> Result<String, String> {
