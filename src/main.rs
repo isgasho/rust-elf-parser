@@ -5,7 +5,7 @@ fn main() {
 }
 
 fn run() -> i32 {
-    let result = getTarget();
+    let result = get_target();
     match result {
         Err(e) => {
             eprintln!("{}", e);
@@ -18,7 +18,7 @@ fn run() -> i32 {
     }
 }
 
-fn getTarget() -> Result<String, String> {
+fn get_target() -> Result<String, String> {
     let args: Vec<String> = env::args().collect();
     if args.len() <= 1 {
         return Err("Parse error: rust-elf-parser <ELF>".to_string());
